@@ -1,0 +1,7 @@
+<svg width="640" height="800" viewBox="0 0 640 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0.5" y="0.5" width="639" height="799" fill="white" stroke="#111"/>
+  <path d="M80 160H560M80 640H560M160 80V720M480 80V720" stroke="#ddd" stroke-width="1"/>
+  <circle cx="320" cy="286" r="86" stroke="#111" stroke-width="2"/>
+  <path d="M174 594C190 506 244 446 320 446C396 446 450 506 466 594" stroke="#111" stroke-width="2"/>
+  <text x="320" y="718" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#111">assets/profile.jpg</text>
+</svg>
