@@ -15,8 +15,8 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
+  html { scroll-behavior: smooth; }
+  body {
   margin: 0;
   background:
     radial-gradient(circle at 0 0, rgba(180,95,6,.045), transparent 280px),
@@ -25,21 +25,21 @@ body {
   font-family: var(--sans);
   font-size: 15px;
   line-height: 1.62;
-}
-body::selection, ::selection { background: var(--accent-soft); color: var(--text); }
-a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-a:hover { text-decoration-color: var(--accent); }
-button { font: inherit; }
-button {
+  }
+  body::selection, ::selection { background: var(--accent-soft); color: var(--text); }
+  a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-color: var(--accent); }
+  button { font: inherit; }
+  button {
   border: 1px solid var(--line);
   border-radius: 0;
   background: var(--paper);
   color: var(--text);
   padding: 3px 8px;
   cursor: pointer;
-}
-button:active, a:active { transform: translateY(1px); }
-button:focus-visible, a:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+  }
+  button:active, a:active { transform: translateY(1px); }
+  button:focus-visible, a:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
 
 .scanline {
   position: fixed;
@@ -116,12 +116,14 @@ button:focus-visible, a:focus-visible { outline: 1px solid var(--accent); outlin
 .aka { margin: 1px 0 12px; color: var(--muted); font-family: var(--mono); }
 .position { margin: 0; font-weight: 600; line-height: 1.35; }
 .unit { margin: 6px 0 18px; color: var(--muted); font-size: 13px; line-height: 1.45; }
+
 .links {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.8fr 1.2fr;
   gap: 6px;
   margin: 18px 0;
 }
+
 .links a, .actions button, .actions a {
   min-height: 28px;
   display: inline-flex;
@@ -135,7 +137,16 @@ button:focus-visible, a:focus-visible { outline: 1px solid var(--accent); outlin
   font-size: 12px;
   line-height: 1;
   padding: 5px 8px;
-  transition: border-color .14s ease, background .14s ease, box-shadow .14s ease, transform .08s ease;
+  transition: border-color .14s ease,
+              background .14s ease,
+              box-shadow .14s ease,
+              transform .08s ease;
+}
+
+.links a {
+  white-space: nowrap;
+  font-size: 11px;
+  padding: 5px 6px;
 }
 .links a:hover, .actions button:hover, .actions a:hover, .actions button.active {
   border-color: var(--line-strong);
