@@ -57,17 +57,10 @@
 <section class="section about" id="about">
         <h2>About <span class="section-emoji" aria-hidden="true">🧭</span></h2>
         <p>
-          I am currently a PhD student at the Data Science Institute (DSI), University of Technology Sydney (UTS), Australia.
-          I previously received my MSc degree in Computer Technology from the School of Computer and Information Science,
-          Southwest University. During my previous research, I worked on vision-language model evaluation, medical image
-          synthesis, lesion and fracture detection, and medical image segmentation, with experience in developing reliable
-          and reproducible AI pipelines.
+          I am currently a PhD student at the Data Science Institute (DSI), University of Technology Sydney (UTS), Australia, and a research intern at A*STAR’s Centre for Frontier AI Research (CFAR). I received my MSc degree in Computer Technology from Southwest University. My previous research includes vision-language model evaluation, and medical image synthesis.
         </p>
         <p>
-          My current research focuses on trustworthy multimodal AI, multimodal agents, and agent evaluation and security.
-          I am interested in developing reliable, robust, and controllable AI systems by investigating how multimodal
-          models perceive, reason, and interact with complex environments. My future research aims to bridge foundation
-          models, multimodal intelligence, and trustworthy AI evaluation toward practical and responsible AI applications.
+          My current research focuses on trustworthy, controllable, and interpretable recommender systems, trustworthy multimodal AI, multimodal agents, and agent evaluation and security. I am particularly interested in building reliable and controllable AI systems that can effectively perceive, reason, recommend, and interact in complex environments.
         </p>
         <div class="focus-strip" aria-label="Research focus widgets">
           <span>trustworthy multimodal AI</span>
@@ -89,7 +82,7 @@
           </article>
           <article class="news-item important">
             <time>2026</time>
-            <p><strong>MSDFNET</strong> was published at ICASSP 2026.</p>
+            <p><strong>MSDFNET</strong> was published at <i>ICASSP</i> 2026.</p>
           </article>
                 <article class="news-item important">
             <time>2026</time>
@@ -97,11 +90,11 @@
           </article>
           <article class="news-item">
             <time>2025</time>
-            <p><span class="news-emoji" aria-hidden="true">🧬</span><strong>AnatoMaskGAN</strong> was published at BIBM 2025.</p>
+            <p><span class="news-emoji" aria-hidden="true">🧬</span><strong>AnatoMaskGAN</strong> was published at <i>BIBM</i> 2025.</p>
           </article>
           <article class="news-item">
             <time>2025</time>
-            <p><strong>FCSG-Net</strong> was published in Biomedical Signal Processing and Control.</p>
+            <p><strong>FCSG-Net</strong> was published in <i>Biomedical Signal Processing and Control</i>.</p>
           </article>
           <article class="news-item">
             <time>2025</time>
@@ -143,7 +136,7 @@
               <p class="fold" id="abs-2">Medical semantic-mask synthesis enhances data augmentation and analysis, yet most GAN-based methods still generate one-to-one images without maintaining spatial consistency across slices. To overcome this, we propose AnatoMaskGAN, a novel framework that embeds interslice spatial features, integrates diverse augmentation strategies, and optimizes deep feature learning for complex medical scans. Specifically, a GNN-based slice-feature fusion module models spatial relationships and aggregates contextual cues from neighboring slices, capturing anatomical structures more comprehensively. A 3D spatial noise-injection strategy fuses weighted spatial features with noise to enrich structural diversity, while a grayscale-texture classifier refines grayscale and texture representation during generation. Experiments on L2R-OASIS and L2R-Abdomen CT show that AnatoMaskGAN achieves 26.50 dB PSNR and 0.9229 SSIM on L2R-OASIS, surpassing the state of the art by 0.43 dB, and reaches 0.8602 SSIM on L2R-Abdomen CT, a 0.48-point improvement. Ablation studies confirm that removing any of the three modules degrades PSNR, SSIM, and LPIPS, verifying the effectiveness of each component in enhancing reconstruction fidelity and perceptual quality. Code is available at https://github.com/noheadwuzonglin/AnatoMaskGAN.</p>
             </div>
           </article>
-
+    
           <article class="paper" data-index="3" data-year="2025">
             <div class="paper-no">[4]</div>
             <div class="paper-main">
@@ -199,13 +192,13 @@
           <article class="paper" data-index="8" data-year="2025">
             <div class="paper-no">[8]</div>
             <div class="paper-main">
-              <h3>Precise Numeric Control for Image Generation: Kontext-based Synthesis Aligned with Consistency Rewards</h3>
-              <p class="authors"><strong>Zonglin Wu</strong>, Jingjin Ma, Ziwen Li, Yule Xue, Yiren Song*</p>
-              <p class="meta">in preparation</p>
+              <h3>G^2RA-NET: Graph-based Cross-Slice Relation Modeling with Attention Gating for Medical Image Segmentation</h3>
+              <p class="authors">Shengye Wang, <strong>Zonglin Wu*</strong>, Liang Fan, Yule Xue, Haozhe Zhao</p>
+              <p class="meta">submitted to ICASSP 2027</p>
               <div class="actions">
                 <button type="button" data-toggle="abs-8">abstract</button>
               </div>
-              <p class="fold" id="abs-8">A controllable image generation study using Kontext-based synthesis and consistency rewards for precise numeric control.</p>
+              <p class="fold" id="abs-8">Medical image segmentation supports quantitative clinical analysis and computer-aided diagnosis. Recent methods for medical image segmentation have improved both local feature representation and volumetric context modeling. However, existing methods still strug- gle to efficiently model cross-slice relations in anisotropic volumet- ric images, limiting segmentation consistency and accuracy. This pa- per proposes G^2RA-Net, a medical image segmentation framework that combines graph-based cross-slice relation modeling with atten- tion gating. Graph-Based Slice Relationship Modeling (GSRM) cap- tures anatomical dependencies across consecutive slices by repre- senting each slice as a graph node and propagating semantic con- text through graph message passing. The Cross-Slice Attention Gate (CSAG) then selects relevant neighboring context and emphasizes target anatomical regions through attention-guided feature modula- tion. Experiments on brain MRI and abdominal CT datasets demon- strate that G^2RA-Net outperforms representative methods in seg- mentation accuracy and boundary quality. Ablation studies further validate the proposed design.</p>
             </div>
           </article>
         </div>
