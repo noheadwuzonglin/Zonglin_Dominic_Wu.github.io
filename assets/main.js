@@ -1,91 +1,107 @@
-const toast = document.getElementById('toast');
-const navLinks = [...document.querySelectorAll('.nav a')];
-const sections = navLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
-const scanline = document.querySelector('.scanline');
+(() => {
+  'use strict';
 
-function showToast(text) {
-  toast.textContent = text;
-  toast.classList.add('show');
-  clearTimeout(window.__toast);
-  window.__toast = setTimeout(() => toast.classList.remove('show'), 1200);
-}
+  const one = (selector, root = document) => root.querySelector(selector);
+  const all = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const toast = one('#toast');
+  let toastTimer;
 
-document.querySelectorAll('[data-toggle]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const box = document.getElementById(btn.dataset.toggle);
-    if (!box) return;
-    box.classList.toggle('show');
-    btn.classList.toggle('active', box.classList.contains('show'));
-    btn.animate([
-      { transform: 'translateY(0)' },
-      { transform: 'translateY(1px)' },
-      { transform: 'translateY(0)' }
-    ], { duration: 130, easing: 'ease-out' });
+  function notify(message) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 2800);
+  }
+
+  // Responsive navigation and contact disclosure. Native details work without JS.
+  const menuButton = one('.menu-toggle');
+  const navigation = one('#site-nav');
+  const contact = one('#contact-menu');
+  const header = one('.site-header');
+  const mobile = window.matchMedia('(max-width: 680px)');
+
+  function setMenu(open) {
+    navigation?.classList.toggle('is-open', open);
+    menuButton?.setAttribute('aria-expanded', String(open));
+    const label = one('.menu-label');
+    if (label) label.textContent = open ? 'Close' : 'Menu';
+    if (!open && contact) contact.open = false;
+  }
+  menuButton?.addEventListener('click', () => {
+    setMenu(menuButton.getAttribute('aria-expanded') !== 'true');
   });
-});
-
-function onScroll() {
-  const max = document.documentElement.scrollHeight - window.innerHeight;
-  scanline.style.width = max > 0 ? `${(window.scrollY / max) * 100}%` : '0%';
-  let current = sections[0]?.id;
-  sections.forEach(sec => { if (sec.getBoundingClientRect().top < 120) current = sec.id; });
-  navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${current}`));
-}
-window.addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-const nameLine = document.getElementById('nameLine');
-if (nameLine) {
-  nameLine.addEventListener('click', async () => {
-    nameLine.classList.remove('flash');
-    void nameLine.offsetWidth;
-    nameLine.classList.add('flash');
-    try {
-      await navigator.clipboard.writeText('noheadwuzonglin@gmail.com');
-      showToast('email copied');
-    } catch {
-      showToast('noheadwuzonglin@gmail.com');
+  all('.site-nav > a').forEach(link => link.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', event => {
+    if (contact?.open && !contact.contains(event.target)) contact.open = false;
+    if (mobile.matches && navigation?.classList.contains('is-open') && !header?.contains(event.target)) setMenu(false);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape') return;
+    if (contact?.open) {
+      contact.open = false;
+      one('summary', contact)?.focus();
+    } else if (navigation?.classList.contains('is-open')) {
+      setMenu(false);
+      menuButton?.focus();
     }
   });
-}
+  if (mobile.addEventListener) mobile.addEventListener('change', () => setMenu(false));
 
-
-
-document.querySelectorAll('.paper h3').forEach(title => {
-  title.addEventListener('click', () => {
-    const paper = title.closest('.paper');
-    const firstButton = paper?.querySelector('[data-toggle^="abs-"]');
-    firstButton?.click();
-  });
-});
-
-document.getElementById('yearNow').textContent = new Date().getFullYear();
-
-
-// Tiny tactile details: intentionally quiet, no visible controls.
-document.addEventListener('click', event => {
-  const dot = document.createElement('span');
-  dot.className = 'click-dot';
-  dot.style.left = `${event.clientX}px`;
-  dot.style.top = `${event.clientY}px`;
-  document.body.appendChild(dot);
-  dot.addEventListener('animationend', () => dot.remove(), { once: true });
-
-  // A few quiet square pixels, no labels.
-  for (let i = 0; i < 3; i += 1) {
-    const spark = document.createElement('span');
-    spark.className = 'click-spark';
-    spark.style.left = `${event.clientX}px`;
-    spark.style.top = `${event.clientY}px`;
-    const palette = ['#d92d3a', '#ffe4e6', '#111111', '#f4f4f4', '#d92d3a'];
-    spark.style.setProperty('--dx', `${(i - 1) * 14 + Math.random() * 8}px`);
-    spark.style.setProperty('--dy', `${-10 - Math.random() * 18}px`);
-    spark.style.setProperty('--spark', palette[i % palette.length]);
-    document.body.appendChild(spark);
-    spark.addEventListener('animationend', () => spark.remove(), { once: true });
+  function copyFallback(value) {
+    const previousFocus = document.activeElement;
+    const field = document.createElement('textarea');
+    field.value = value;
+    field.setAttribute('readonly', '');
+    field.style.cssText = 'position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;';
+    document.body.append(field);
+    field.select();
+    field.setSelectionRange(0, value.length);
+    let success = false;
+    try { success = document.execCommand('copy'); } catch { /* Show the address below. */ }
+    field.remove();
+    previousFocus?.focus({ preventScroll: true });
+    return success;
   }
-});
+  all('[data-copy]').forEach(button => {
+    button.addEventListener('click', async () => {
+      const email = button.dataset.copy;
+      let copied = false;
+      try {
+        if (window.isSecureContext && navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(email);
+          copied = true;
+        }
+      } catch { /* Clipboard permission is optional. */ }
+      if (!copied) copied = copyFallback(email);
+      notify(copied ? 'Email copied.' : email);
+      if (copied) {
+        button.textContent = 'Copied';
+        setTimeout(() => { button.textContent = 'Copy'; }, 1600);
+      }
+    });
+  });
 
-document.querySelectorAll('.paper').forEach((paper, index) => {
-  paper.style.setProperty('--delay', `${index * 24}ms`);
-});
+  const year = one('#year-now');
+  if (year) year.textContent = new Date().getFullYear();
+  const progress = one('.reading-progress');
+  let scrollPending = false;
+  function paintProgress() {
+    const distance = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = distance > 0 ? Math.min(1, Math.max(0, window.scrollY / distance)) : 0;
+    if (progress) progress.style.transform = `scaleX(${ratio})`;
+    scrollPending = false;
+  }
+  function scheduleProgress() {
+    if (!scrollPending) {
+      scrollPending = true;
+      requestAnimationFrame(paintProgress);
+    }
+  }
+  window.addEventListener('scroll', scheduleProgress, { passive: true });
+  window.addEventListener('resize', scheduleProgress, { passive: true });
+  window.addEventListener('load', scheduleProgress, { once: true });
+  // Opening abstracts changes the scrollable document height.
+  document.addEventListener('toggle', scheduleProgress, true);
+  paintProgress();
+})();
